@@ -1,0 +1,143 @@
+<!DOCTYPE html><html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For You</title><style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #111;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Container */
+.card-container {
+    perspective: 1000px;
+}
+
+/* Card */
+.card {
+    width: 320px;
+    height: 550px;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.8s;
+    cursor: pointer;
+}
+
+.card.flipped {
+    transform: rotateY(180deg);
+}
+
+/* Faces */
+.card-face {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+    overflow: hidden;
+    backface-visibility: hidden;
+}
+
+/* Front */
+.front img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 30% center; /* important for your image */
+    filter: brightness(0.85);
+}
+
+/* Subtle front text */
+.front-text {
+    position: absolute;
+    top: 30px;
+    left: 20px;
+    right: 20px;
+    color: #ffb6c1;
+    font-size: 22px;
+    font-style: italic;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.6);
+}
+
+/* Back */
+.back {
+    background: #1a1a1a;
+    color: #f5e6ea;
+    transform: rotateY(180deg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 25px;
+}
+
+/* Text */
+.text {
+    font-size: 18px;
+    line-height: 1.7;
+    white-space: pre-line;
+}
+
+.signature {
+    margin-top: 20px;
+    font-size: 14px;
+    opacity: 0.7;
+}
+</style></head><body><div class="card-container">
+    <div class="card" onclick="flipCard()">    <!-- FRONT -->
+    <div class="card-face front">
+        <img src="flower.jpg" alt="flower">
+        <div class="front-text">
+            Smile as beautiful as a flower
+        </div>
+    </div>
+
+    <!-- BACK -->
+    <div class="card-face back">
+        <div>
+            <div id="typeText" class="text"></div>
+            <div class="signature">– always you</div>
+        </div>
+    </div>
+
+</div>
+
+</div><script>
+const text = `I saw these today
+
+and I thought of you.
+
+The same soft pink
+that shows up
+when you smile.`;
+
+let i = 0;
+let started = false;
+
+function typeWriter() {
+    if (i < text.length) {
+        document.getElementById("typeText").innerHTML += text.charAt(i);
+        i++;
+        setTimeout(typeWriter, 40);
+    }
+}
+
+function flipCard() {
+    const card = document.querySelector(".card");
+    card.classList.toggle("flipped");
+
+    if (!started) {
+        started = true;
+        setTimeout(typeWriter, 400);
+    }
+}
+</script></body>
+</html>
